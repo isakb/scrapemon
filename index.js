@@ -1,17 +1,9 @@
 'use strict';
-const scraper = require('qscraper');
-const validUrl = require('valid-url');
 const url = require('url');
 const path = require('path');
-const SCRIPT_TAG_SELECTOR = 'script[src]';
-const urls = process.argv.slice(2).map((arg) => {
-  if (!validUrl.isWebUri(arg)) {
-    throw new Error('Unexpected URL format: ' + arg);
-  }
-  return arg;
-});
+const scraper = require('qscraper');
 
-let session = scraper.session();
+const SCRIPT_TAG_SELECTOR = 'script[src]';
 
 // Returns a promise that resolves with an array of
 // the scripts found at `url` (skipping inline scripts).
@@ -37,6 +29,16 @@ function getRelativeConverter(pageUrl) {
     }
   };
 }
+
+const urls = process.argv.slice(2).map((arg) => {
+  let looksLikeUrl = /^(http|ftp)s?:\/\//.exec(arg);
+  if (!looksLikeUrl) {
+    throw new Error('Expecting a URL, got: ' + arg);
+  }
+  return arg;
+});
+
+let session = scraper.session();
 
 Promise.all(urls.map(extractScriptSrcs)).then((arr) => {
   arr.forEach((scriptSrcs, index) => {
