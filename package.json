@@ -1,0 +1,22 @@
+{
+  "name": "scrapemon",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node index.js https://spotify.com | grep '\\.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "is-absolute-url": "^2.0.0",
+    "scrape-url": "^1.0.3",
+    "valid-url": "^1.0.9"
+  },
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0"
+  }
+}
